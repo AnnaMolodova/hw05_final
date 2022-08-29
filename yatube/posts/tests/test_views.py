@@ -300,6 +300,7 @@ class FollowViewsTest(TestCase):
         self.assertEqual(Follow.objects.count(), follow_count)
 
     def test_new_post_follow(self):
+        """Подписанный юзер может видеть ленту подписок."""
         self.authorized_client.get(
             reverse('posts:profile_follow', args={self.author}))
         response = self.authorized_client.get(
@@ -308,6 +309,7 @@ class FollowViewsTest(TestCase):
         self.assertEqual(post_follow, self.post_author)
 
     def test_new_post_unfollow(self):
+        """НЕподписанный юзер не может видеть ленту подписок."""
         new_author = User.objects.create_user(username='new_author')
         self.authorized_client.force_login(new_author)
         Post.objects.create(
