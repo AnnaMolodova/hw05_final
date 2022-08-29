@@ -30,16 +30,22 @@ class CacheViewsTest(TestCase):
 
     def test_cache_index(self):
         """Работа кэша в index."""
-        response = CacheViewsTest.authorized_client.get(reverse('posts:index'))
+        response = CacheViewsTest.authorized_client.get(
+            reverse('posts:index')
+        )
         posts = response.content
         Post.objects.create(
             text='Вот такой текст',
             author=CacheViewsTest.author,
         )
-        response_1 = CacheViewsTest.authorized_client.get(reverse('posts:index'))
+        response_1 = CacheViewsTest.authorized_client.get(
+            reverse('posts:index')
+        )
         posts_1 = response_1.content
         self.assertEqual(posts_1, posts)
         cache.clear()
-        response_2 = CacheViewsTest.authorized_client.get(reverse('posts:index'))
+        response_2 = CacheViewsTest.authorized_client.get(
+            reverse('posts:index')
+        )
         posts_2 = response_2.content
         self.assertNotEqual(posts_1, posts_2)

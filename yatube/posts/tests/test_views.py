@@ -57,12 +57,12 @@ class TaskPagesTests(TestCase):
 
         cls.authorized_client = Client()
         cls.authorized_client.force_login(cls.user)
-    
+
     @classmethod
     def tearDownClass(cls):
         super().tearDownClass()
         shutil.rmtree(settings.MEDIA_ROOT, ignore_errors=True)
-    
+
     def setUp(self):
         cache.clear()
 
@@ -243,6 +243,8 @@ class PaginatorViewsTest(TestCase):
             'posts:profile', kwargs={'username': 'auth'}) + '?page=2'
         )
         self.assertEqual(len(response.context['page_obj']), 3)
+
+
 class FollowViewsTest(TestCase):
 
     def setUp(self):
@@ -256,7 +258,7 @@ class FollowViewsTest(TestCase):
             text='просто текст',
             author=self.author,
         )
-    
+
     def test_auth_follow(self):
         """Авторизованный пользователь может подписываться на людей."""
         follow_count = Follow.objects.count()
@@ -269,11 +271,11 @@ class FollowViewsTest(TestCase):
                 }
             )
         )
-        follow =Follow.objects.last()
+        follow = Follow.objects.last()
         self.assertEqual(Follow.objects.count(), follow_count + 1)
         self.assertEqual(follow.author, new_user)
         self.assertEqual(follow.user, self.user)
-    
+
     def test_auth_unfollow(self):
         """Авторизованный пользователь может отписываться от людей."""
         follow_count = Follow.objects.count()

@@ -1,6 +1,5 @@
 import shutil
 import tempfile
-from urllib import response
 
 from posts.models import Group, Post, User, Comment
 from django.conf import settings
@@ -112,7 +111,7 @@ class PostCreateFormTest(TestCase):
                 group=self.group.id
             ).exists()
         )
-    
+
     def test_img_index(self):
         """В index изображение передается в словаре context."""
         response = self.authorized_client.get(
@@ -120,7 +119,7 @@ class PostCreateFormTest(TestCase):
         )
         post = response.context['page_obj'][0].image.name
         self.assertEqual(post, 'posts/small.gif')
-    
+
     def test_img_profile(self):
         """В profile изображение передается в словаре context."""
         response = self.authorized_client.get(
@@ -131,7 +130,7 @@ class PostCreateFormTest(TestCase):
         )
         post = response.context['page_obj'][0].image.name
         self.assertEqual(post, 'posts/small.gif')
-    
+
     def test_img_group(self):
         """В profile изображение передается в словаре context."""
         response = self.authorized_client.get(
@@ -142,7 +141,7 @@ class PostCreateFormTest(TestCase):
         )
         group = response.context['page_obj'][0].image.name
         self.assertEqual(group, 'posts/small.gif')
-    
+
     def test_img_post_detail(self):
         """В post_detail изображение передается в словаре context."""
         response = self.authorized_client.get(
@@ -162,13 +161,13 @@ class CommentFormTest(TestCase):
         cls.user = User.objects.create_user(username='user')
         cls.post = Post.objects.create(
             author=cls.user,
-            text= 'Вот текст'
+            text='Вот текст'
         )
-    
+
     def setUp(self):
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
-    
+
     def test_comment_auth_user(self):
         """Комментарии могут писать только авторизованные юзеры."""
         form_data = {
@@ -191,7 +190,7 @@ class CommentFormTest(TestCase):
         self.assertTrue(
             Comment.objects.filter(text='Вот такой текст').exists()
         )
-    
+
     def test_comment_show_post_detail(self):
         """Комментарий появляется на странице поста."""
         comment_count = Comment.objects.count()

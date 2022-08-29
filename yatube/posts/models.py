@@ -64,7 +64,7 @@ class Comment(models.Model):
         help_text='Добавте сюда ваш комментарий'
     )
     created = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return self.text[:15]
 
