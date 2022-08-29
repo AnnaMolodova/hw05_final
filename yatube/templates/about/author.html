@@ -1,0 +1,27 @@
+<!-- templates/about/author.html -->
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Об авторе проекта{% endblock %}
+{% block content %}
+<h1>Welcome в мое маленькое творение</h1>
+<figure class="text-end ">
+  <img src="{% static 'about/cats.jpeg' %}" width="300" height="400"
+       style="transform: scaleX(-1); margin-right: 0%" alt="Это коты">
+  <blockquote class="blockquote">
+  <p
+    align="left">
+    Я начинающий программист,<br>
+    в 20 лет написала свое первое приложение<br>
+    Люблю фотографировать, пить кофе<br>
+    и собирать полевые цветы<br>
+    В принципе все творчество<br>
+    доставляет мне удовольствие.<br>
+    <br>
+    Считаю, что прогаммировние это хороший вариант выразить свои идеи
+  </p>
+</blockquote>
+<figcaption class="blockquote-footer">
+  Анна, <cite title="Source Title">разработчик Yatube </cite>
+</figcaption>
+</figure>
+{% endblock %}
