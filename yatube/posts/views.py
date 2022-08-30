@@ -42,7 +42,7 @@ def profile(request, username):
         "author": author,
         "following": following,
     }
-    context.update(Create_Page(author.posts.all(), request))
+    context.update(Create_Page(posts, request))
     return render(request, template, context)
 
 
