@@ -33,9 +33,6 @@ def profile(request, username):
     author = get_object_or_404(User, username=username)
     posts = Post.objects.filter(author_id=author.id)
     count = posts.count
-    paginator = Paginator(posts, 10)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
     user = request.user
     following = False
     if (not user.is_anonymous) and Follow.objects.filter(
@@ -43,11 +40,10 @@ def profile(request, username):
     ).exists():
         following = True
     context = {
-        "count": count,
         "author": author,
-        "page_obj": page_obj,
         "following": following,
     }
+    context.update(Create_Page(author.posts.all(), request))
     return render(request, template, context)
 
 
@@ -126,8 +122,8 @@ def add_comment(request, post_id):
 def follow_index(request):
     posts = Post.objects.filter(author__following__user=request.user)
     paginator = Paginator(posts, 10)
-    page_nuber = request.GET.get('page')
-    page_obj = paginator.get_page(page_nuber)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'page_obj': page_obj
     }
